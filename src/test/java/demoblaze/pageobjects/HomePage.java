@@ -18,11 +18,13 @@ public class HomePage extends BasePage {
     private static final String LOG_IN = "//*[@id='login2']";
     private static final String LOG_OUT = "//*[@id='logout2']";
     private static final String WELCOME_TEXT = "//*[@id='nameofuser']";
+    private static final String PRODUCT = "//html/body/div[5]/div/div[2]/div/div[1]/div/div/h4/a";
 
     private WebElement sign_upElement;
     private WebElement log_inElement;
     private WebElement log_outElement;
     private WebElement welcometextElement;
+    private WebElement productElement;
 
     public void selectSignUp() {
         sign_upElement = driver.findElement(By.xpath(SIGN_UP));
@@ -56,6 +58,16 @@ public class HomePage extends BasePage {
                 .until(d -> !Objects.equals(d.findElement(By.xpath(LOG_IN)).getText(), ""));
         log_inElement = driver.findElement(By.xpath(LOG_IN));
         return log_inElement.getText();
+    }
+
+    public void selectProductOnPage() {
+            new FluentWait<>(driver)
+                    .withTimeout(Duration.ofSeconds(10))
+                    .pollingEvery(Duration.ofMillis(100))
+                    .until(ExpectedConditions.elementToBeClickable(By.xpath(PRODUCT)));
+        productElement = driver.findElement(By.xpath(PRODUCT));
+        productElement.click();
+        driver.manage().timeouts().implicitlyWait(Duration.ofMillis(100));
     }
 }
 

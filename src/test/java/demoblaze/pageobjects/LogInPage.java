@@ -28,4 +28,7 @@ public class LogInPage extends BasePage {
         loginElement = driver.findElement(By.xpath(LOG_IN_OPTION));
         loginElement.click();
     }
+    public String getErrorMessage() {
+        return GetAlertTextAndClose();
+    }
 }

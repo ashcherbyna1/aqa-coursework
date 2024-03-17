@@ -19,3 +19,12 @@ Feature: [TS] Log in and Log out functionality
     And Click Log in option
     And Select Log Out
     Then Verify that "Log in" option is displayed
+
+  @jiralinkid-4
+  Scenario: Verify invalid login
+    Given User select Log in option
+    When User enters credential
+      | username    | password |
+      | TestuserAS3 | Zse45aw3 |
+    And Click Log in option
+    Then Error message is displayed "User does not exist."
