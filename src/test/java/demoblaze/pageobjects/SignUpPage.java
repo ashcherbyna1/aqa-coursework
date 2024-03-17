@@ -1,11 +1,8 @@
 package demoblaze.pageobjects;
 
-import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.FluentWait;
 
 public class SignUpPage extends BasePage {
     public SignUpPage(WebDriver driver) {

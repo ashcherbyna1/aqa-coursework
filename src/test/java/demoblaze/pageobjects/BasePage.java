@@ -12,7 +12,7 @@ public abstract class BasePage {
         this.driver = driver;
     }
 
-    protected String GetAlertTextAndClose(){
+    protected String GetAlertTextAndClose() {
         Alert alert = new FluentWait<>(driver).until(ExpectedConditions.alertIsPresent());
         String text = alert.getText();
         alert.accept();

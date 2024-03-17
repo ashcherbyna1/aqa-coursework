@@ -26,7 +26,6 @@ import static org.testng.reporters.RuntimeBehavior.FILE_NAME;
 public class LogInAndLogOutStepDefinitions {
     private WebDriver driver;
     private static final String baseUrl = "https://www.demoblaze.com/";
-    private LogInPage logInPage;
 
     public LogInAndLogOutStepDefinitions() {
     }
@@ -52,14 +51,14 @@ public class LogInAndLogOutStepDefinitions {
 
     @And("Click Log in option")
     public void SelectLogIn() {
-        logInPage.clickLogInButton();
+        new LogInPage(driver).clickLogInButton();
     }
 
     @When("User enters credential")
     public void entersLogInCredential(DataTable dataTable) {
         List<Map<String, String>> user = dataTable.asMaps(String.class, String.class);
         for (Map<String, String> form : user) {
-            logInPage = new LogInPage(driver);
+            var logInPage = new LogInPage(driver);
             var username = form.get("username");
             logInPage.setLogInData(username, form.get("password"));
         }
@@ -86,7 +85,7 @@ public class LogInAndLogOutStepDefinitions {
     }
     @Then("Error message is displayed {string}")
     public void verifyErrorMassage(String errorMessage) {
-        var textSuccessfulText = logInPage.getErrorMessage();
+        var textSuccessfulText = new LogInPage(driver).getErrorMessage();
         Assert.assertEquals(textSuccessfulText, errorMessage);
     }
 
