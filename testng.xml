@@ -3,7 +3,7 @@
 <suite name="Cucumber Tests" configfailurepolicy="continue">
     <test name="BrowserStackCucumberTestNg">
         <classes>
-            <class name="BrowserStackCucumberTestNgRunner"/>
+            <class name="demoblaze.runner.Runner"/>
         </classes>
     </test>
 </suite>
