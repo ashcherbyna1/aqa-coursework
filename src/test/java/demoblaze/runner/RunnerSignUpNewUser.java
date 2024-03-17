@@ -5,5 +5,5 @@ import io.cucumber.testng.CucumberOptions;
 
 @CucumberOptions(tags = "", features = {"src/test/resources/demoblaze/tests/SingUpNewUser.feature"}, glue = {"demoblaze.steps"},
         plugin =  {"pretty", "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm"})
-public class RunnerSignUPNewUser extends AbstractTestNGCucumberTests {
+public class RunnerSignUpNewUser extends AbstractTestNGCucumberTests {
 }

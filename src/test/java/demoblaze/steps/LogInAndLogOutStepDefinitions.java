@@ -18,10 +18,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import static org.testng.reporters.RuntimeBehavior.FILE_NAME;
 
 public class LogInAndLogOutStepDefinitions {
     private WebDriver driver;
@@ -32,11 +28,6 @@ public class LogInAndLogOutStepDefinitions {
 
     @Before
     public void setUp() throws MalformedURLException {
-        var loggerconfig = "src/test/resources/logging.properties"; //System.getenv("FILE_NAME");
-        System.setProperty("java.util.logging.config.file", loggerconfig);
-        var logger = Logger.getLogger(LogInAndLogOutStepDefinitions.class.getName());
-        logger.log(Level.CONFIG, "Read data from " + FILE_NAME);
-
         var gridUrl = "http://192.168.1.6:4444/";
         var options = new ChromeOptions();
         driver = new RemoteWebDriver(new URL(gridUrl), options);
@@ -83,6 +74,7 @@ public class LogInAndLogOutStepDefinitions {
         var text = homePage.getLogInMessage();
         Assert.assertEquals(text, logInText);
     }
+
     @Then("Error message is displayed {string}")
     public void verifyErrorMassage(String errorMessage) {
         var textSuccessfulText = new LogInPage(driver).getErrorMessage();

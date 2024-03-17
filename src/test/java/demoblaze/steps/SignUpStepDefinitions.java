@@ -1,9 +1,9 @@
 package demoblaze.steps;
 
 import com.fasterxml.jackson.databind.json.JsonMapper;
+import demoblaze.dto.RegistrationForm;
 import demoblaze.pageobjects.HomePage;
 import demoblaze.pageobjects.SignUpPage;
-import demoblaze.dto.RegistrationForm;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
@@ -11,10 +11,10 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import okhttp3.RequestBody;
-import okhttp3.Request;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -26,6 +26,8 @@ import java.net.URL;
 import java.time.Instant;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class SignUpStepDefinitions {
     private WebDriver driver;
@@ -33,23 +35,25 @@ public class SignUpStepDefinitions {
     String apiurl = "https://api.demoblaze.com/signup";
     OkHttpClient client = new OkHttpClient();
     JsonMapper mapper = new JsonMapper();
+    private Logger logger;
+
     @Before
     public void setUp() throws MalformedURLException {
         var gridUrl = "http://192.168.1.6:4444/";
         var options = new ChromeOptions();
         driver = new RemoteWebDriver(new URL(gridUrl), options);
         driver.manage().window().maximize();
+        logger = Logger.getLogger(SignUpStepDefinitions.class.getName());
     }
 
     @Given("User select Sign up option")
-    public void signUp(){
+    public void signUp() {
         driver.get(baseUrl);
         new HomePage(driver).selectSignUp();
     }
 
     @When("User enters valid credential")
-    public void entersValidCredential(DataTable dataTable)
-    {
+    public void entersValidCredential(DataTable dataTable) {
         Instant instant = Instant.now();
         long timeStampMillis = instant.toEpochMilli();
         List<Map<String, String>> user = dataTable.asMaps(String.class, String.class);
@@ -61,7 +65,7 @@ public class SignUpStepDefinitions {
     }
 
     @And("Select Registration option")
-    public void selectRegistrationOption(){
+    public void selectRegistrationOption() {
         new SignUpPage(driver).selectingRegistrationOption();
     }
 
@@ -72,7 +76,7 @@ public class SignUpStepDefinitions {
     }
 
     @And("Close modal window")
-    public void closeModalWindow(){
+    public void closeModalWindow() {
         new SignUpPage(driver).closingModalWindow();
     }
 
@@ -83,8 +87,8 @@ public class SignUpStepDefinitions {
         List<Map<String, String>> user = dataTable.asMaps(String.class, String.class);
         for (Map<String, String> form : user) {
             var signUpPage = new SignUpPage(driver);
-            var username = form.get("username")+ timeStampMillis ;
-            registerUserFromApi(username,form.get("password"));
+            var username = form.get("username") + timeStampMillis;
+            registerUserFromApi(username, form.get("password"));
             signUpPage.setUsernameAndPassword(username, form.get("password"));
         }
     }
@@ -100,12 +104,18 @@ public class SignUpStepDefinitions {
                 .url(endpoint)
                 .post(requestbody)
                 .build();
-       try(var response = client.newCall(request).execute()) {
-       }
+        try (var response = client.newCall(request).execute()) {
+            if (response.isSuccessful()) {
+                logger.log(Level.INFO, "User successfully created via API");
+            } else {
+                logger.log(Level.WARNING, "User not created via API " + response.message());
+                Assert.fail();
+            }
+        }
     }
 
     @After
-    public void CloseBrowser(){
+    public void CloseBrowser() {
         driver.quit();
     }
 
