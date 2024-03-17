@@ -34,10 +34,7 @@ public class SignUpPage extends BasePage {
     }
 
     public String getSuccessfulMassage() {
-        Alert alert = new FluentWait<>(driver).until(ExpectedConditions.alertIsPresent());
-        String text = alert.getText();
-        alert.accept();
-        return text;
+        return GetAlertTextAndClose();
     }
 
     public void closingModalWindow() {

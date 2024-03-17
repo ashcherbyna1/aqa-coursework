@@ -84,10 +84,16 @@ public class LogInAndLogOutStepDefinitions {
         var text = homePage.getLogInMessage();
         Assert.assertEquals(text, logInText);
     }
+    @Then("Error message is displayed {string}")
+    public void verifyErrorMassage(String errorMessage) {
+        var textSuccessfulText = logInPage.getErrorMessage();
+        Assert.assertEquals(textSuccessfulText, errorMessage);
+    }
 
     @After
     public void CloseBrowser() {
         driver.quit();
     }
+
 
 }

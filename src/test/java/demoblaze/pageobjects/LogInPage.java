@@ -1,8 +1,11 @@
 package demoblaze.pageobjects;
 
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
 
 public class LogInPage extends BasePage {
     public LogInPage(WebDriver driver) {
@@ -27,5 +30,8 @@ public class LogInPage extends BasePage {
     public void clickLogInButton() {
         loginElement = driver.findElement(By.xpath(LOG_IN_OPTION));
         loginElement.click();
+    }
+    public String getErrorMessage() {
+        return GetAlertTextAndClose();
     }
 }
