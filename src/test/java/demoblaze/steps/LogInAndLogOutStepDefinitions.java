@@ -2,6 +2,7 @@ package demoblaze.steps;
 
 import demoblaze.pageobjects.HomePage;
 import demoblaze.pageobjects.LogInPage;
+import demoblaze.steps.browser.BrowserSettings;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
@@ -28,7 +29,7 @@ public class LogInAndLogOutStepDefinitions {
 
     @Before
     public void setUp() throws MalformedURLException {
-        var gridUrl = "http://192.168.1.6:4444/";
+        var gridUrl = BrowserSettings.getGridUrl();
         var options = new ChromeOptions();
         driver = new RemoteWebDriver(new URL(gridUrl), options);
         driver.manage().window().maximize();

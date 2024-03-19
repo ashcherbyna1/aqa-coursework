@@ -37,10 +37,11 @@ public class HomePage extends BasePage {
         driver.manage().timeouts().implicitlyWait(Duration.ofMillis(100));
     }
     public void selectLogOut() {
-        log_outElement = new FluentWait<>(driver)
+         new FluentWait<>(driver)
                 .withTimeout(Duration.ofSeconds(10))
                 .pollingEvery(Duration.ofMillis(100))
                 .until(ExpectedConditions.elementToBeClickable(By.xpath(LOG_OUT)));
+        log_outElement =  driver.findElement(By.xpath(LOG_OUT));
         log_outElement.click();
     }
     public String getWelcomeMessage() {

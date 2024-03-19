@@ -3,7 +3,9 @@
 <suite name="Cucumber Tests" configfailurepolicy="continue">
     <test name="BrowserStackCucumberTestNg">
         <classes>
+            <class name="demoblaze.runner.AddProductToCard"/>
             <class name="demoblaze.runner.RunnerLogInAndLogOut"/>
+            <class name="demoblaze.runner.RunnerSignUpNewUser"/>
         </classes>
     </test>
 </suite>

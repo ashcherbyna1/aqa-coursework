@@ -1,6 +1,7 @@
 package demoblaze.steps;
 
 import demoblaze.pageobjects.*;
+import demoblaze.steps.browser.BrowserSettings;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
@@ -26,7 +27,7 @@ public class AddProductToBasketStepDefinitions {
 
     @Before
     public void setUp() throws MalformedURLException {
-        var gridUrl = "http://192.168.1.6:4444/";
+        var gridUrl = BrowserSettings.getGridUrl();
         var options = new ChromeOptions();
         driver = new RemoteWebDriver(new URL(gridUrl), options);
         driver.get(baseUrl);
