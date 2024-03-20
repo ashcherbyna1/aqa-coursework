@@ -4,9 +4,8 @@ import com.fasterxml.jackson.databind.json.JsonMapper;
 import demoblaze.dto.RegistrationForm;
 import demoblaze.pageobjects.HomePage;
 import demoblaze.pageobjects.SignUpPage;
-import demoblaze.steps.browser.BrowserSettings;
+import demoblaze.steps.browser.DriverInstance;
 import io.cucumber.datatable.DataTable;
-import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -17,13 +16,10 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.Assert;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.time.Instant;
 import java.util.List;
 import java.util.Map;
@@ -32,7 +28,6 @@ import java.util.logging.Logger;
 
 public class SignUpStepDefinitions {
     private WebDriver driver;
-    private static final String baseUrl = "https://www.demoblaze.com/";
     String apiurl = "https://api.demoblaze.com/signup";
     OkHttpClient client = new OkHttpClient();
     JsonMapper mapper = new JsonMapper();
@@ -40,16 +35,12 @@ public class SignUpStepDefinitions {
 
     @Before
     public void setUp() throws MalformedURLException {
-        var gridUrl = BrowserSettings.getGridUrl();
-        var options = new ChromeOptions();
-        driver = new RemoteWebDriver(new URL(gridUrl), options);
-        driver.manage().window().maximize();
+        driver = DriverInstance.getDriver();
         logger = Logger.getLogger(SignUpStepDefinitions.class.getName());
     }
 
     @Given("User select Sign up option")
     public void signUp() {
-        driver.get(baseUrl);
         new HomePage(driver).selectSignUp();
     }
 
@@ -114,10 +105,4 @@ public class SignUpStepDefinitions {
             }
         }
     }
-
-    @After
-    public void CloseBrowser() {
-        driver.quit();
-    }
-
 }

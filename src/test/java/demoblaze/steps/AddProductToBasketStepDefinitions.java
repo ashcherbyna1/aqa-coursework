@@ -1,37 +1,27 @@
 package demoblaze.steps;
 
 import demoblaze.pageobjects.*;
-import demoblaze.steps.browser.BrowserSettings;
+import demoblaze.steps.browser.DriverInstance;
 import io.cucumber.datatable.DataTable;
-import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.Assert;
 
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.List;
 import java.util.Map;
 
 public class AddProductToBasketStepDefinitions {
     private WebDriver driver;
-    private static final String baseUrl = "https://www.demoblaze.com/";
 
     private PlaceOrder placeOrder;
 
     @Before
     public void setUp() throws MalformedURLException {
-        var gridUrl = BrowserSettings.getGridUrl();
-        var options = new ChromeOptions();
-        driver = new RemoteWebDriver(new URL(gridUrl), options);
-        driver.get(baseUrl);
-        driver.manage().window().maximize();
+        driver = DriverInstance.getDriver();
     }
 
     @Given("Select product from main page")
@@ -100,10 +90,5 @@ public class AddProductToBasketStepDefinitions {
         var basketPage = new BasketPage(driver);
         var result = basketPage.getDataTable();
         Assert.assertTrue(result);
-    }
-
-    @After
-    public void CloseBrowser() {
-        driver.quit();
     }
 }

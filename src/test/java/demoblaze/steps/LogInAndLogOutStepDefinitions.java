@@ -2,42 +2,33 @@ package demoblaze.steps;
 
 import demoblaze.pageobjects.HomePage;
 import demoblaze.pageobjects.LogInPage;
-import demoblaze.steps.browser.BrowserSettings;
+import demoblaze.steps.browser.DriverInstance;
 import io.cucumber.datatable.DataTable;
-import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.Assert;
 
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.List;
 import java.util.Map;
 
 public class LogInAndLogOutStepDefinitions {
     private WebDriver driver;
-    private static final String baseUrl = "https://www.demoblaze.com/";
 
     public LogInAndLogOutStepDefinitions() {
     }
 
     @Before
     public void setUp() throws MalformedURLException {
-        var gridUrl = BrowserSettings.getGridUrl();
-        var options = new ChromeOptions();
-        driver = new RemoteWebDriver(new URL(gridUrl), options);
-        driver.manage().window().maximize();
+        driver = DriverInstance.getDriver();
     }
 
     @Given("User select Log in option")
     public void logIn() {
-        driver.get(baseUrl);
         new HomePage(driver).selectLogIn();
     }
 
@@ -81,11 +72,4 @@ public class LogInAndLogOutStepDefinitions {
         var textSuccessfulText = new LogInPage(driver).getErrorMessage();
         Assert.assertEquals(textSuccessfulText, errorMessage);
     }
-
-    @After
-    public void CloseBrowser() {
-        driver.quit();
-    }
-
-
 }

@@ -5,6 +5,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 
+import java.time.Duration;
+
 public abstract class BasePage {
     protected final WebDriver driver;
 
@@ -13,7 +15,7 @@ public abstract class BasePage {
     }
 
     protected String GetAlertTextAndClose() {
-        Alert alert = new FluentWait<>(driver).until(ExpectedConditions.alertIsPresent());
+        Alert alert = new FluentWait<>(driver).withTimeout(Duration.ofSeconds(10)).until(ExpectedConditions.alertIsPresent());
         String text = alert.getText();
         alert.accept();
         return text;

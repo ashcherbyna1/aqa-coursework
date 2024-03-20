@@ -62,7 +62,7 @@ public class BasketPage extends BasePage {
         return new FluentWait<>(driver)
                 .withTimeout(Duration.ofSeconds(10))
                 .pollingEvery(Duration.ofMillis(100))
-                .until(d -> driver.findElement(By.xpath(TABLE)).findElements(By.tagName("tr")).isEmpty());
+                .until(d -> d.findElement(By.xpath(TABLE)).findElements(By.tagName("tr")).isEmpty());
     }
 }
 
